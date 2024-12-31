@@ -1,11 +1,12 @@
-import * as express from "express";
-const app = express();
+import { mountRoutes } from "./routes";
+
 const port = 3000;
 
-app.get("/", (_, res) => {
-  res.send("Hello World!");
-});
+function startApp() {
+  const app = mountRoutes();
+  app.listen(port, () => {
+    return console.log(`Express is listening at http://localhost:${port}`);
+  });
+}
 
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
-});
+startApp();
