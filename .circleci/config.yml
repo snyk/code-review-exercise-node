@@ -15,8 +15,8 @@ jobs:
       - run:
           name: Run tests
           command: |
-           npm install && 
-           npm run test
+            npm install && 
+            npm run test
       - run:
           name: Build Docker image
           command: |
