@@ -9,9 +9,10 @@
     "lint:fix": "eslint --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "npm run test:unit",
+    "test": "jest --detectOpenHandles --runInBand --forceExit --selectProjects Unit Integration EndToEnd",
     "test:unit": "jest --detectOpenHandles --runInBand --forceExit --selectProjects Unit",
-    "test:integration": "jest --detectOpenHandles --runInBand --forceExit --selectProjects Integration"
+    "test:integration": "jest --detectOpenHandles --runInBand --forceExit --selectProjects Integration",
+    "test:e2e": "jest --detectOpenHandles --runInBand --forceExit --selectProjects EndToEnd"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +33,7 @@
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
     "prettier": "3.4.2",
+    "testcontainers": "^10.16.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2",

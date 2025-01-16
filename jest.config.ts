@@ -2,6 +2,7 @@ import type { Config } from "jest";
 
 const testFilePattern = ".*\\.test\\.ts$";
 const integrationTestFilePattern = ".*\\.integration.test\\.ts$";
+const endToEndTestFilePattern = ".*\\.e2e.test\\.ts$";
 
 const common: Config = {
   moduleFileExtensions: ["js", "json", "ts"],
@@ -16,7 +17,7 @@ const unit: Config = {
   ...common,
   displayName: "Unit",
   testRegex: testFilePattern,
-  testPathIgnorePatterns: [integrationTestFilePattern],
+  testPathIgnorePatterns: [integrationTestFilePattern, endToEndTestFilePattern],
 };
 
 const integration: Config = {
@@ -26,8 +27,15 @@ const integration: Config = {
   testRegex: integrationTestFilePattern,
 };
 
+const endToEnd: Config = {
+  ...common,
+  rootDir: "src/tests",
+  displayName: "EndToEnd",
+  testRegex: endToEndTestFilePattern,
+};
+
 const config: Config = {
-  projects: [unit, integration],
+  projects: [unit, integration, endToEnd],
 };
 
 export default config;
