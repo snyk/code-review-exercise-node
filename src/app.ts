@@ -1,11 +1,14 @@
 import { mountRoutes } from "./routes";
+import pino from "pino";
 
+const logger = pino();
 const port = 3000;
 
 function startApp() {
   const app = mountRoutes();
   app.listen(port, () => {
-    return console.log(`Express is listening at http://localhost:${port}`);
+    logger.info(`Express is listening at http://localhost:${port}`);
+    return;
   });
 }
 

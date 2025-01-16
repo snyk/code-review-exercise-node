@@ -1,6 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
 import { AxiosError } from "axios";
+import pino from "pino";
 
+const logger = pino();
 const UNEXPECTED_ERROR_MESSAGE = "Unexpected error";
 const INTERNAL_SERVER_ERROR_STATUS_CODE = 500;
 
@@ -10,7 +12,7 @@ export function handleErrors(
   res: Response,
   next: NextFunction,
 ) {
-  console.log(err);
+  logger.error(err);
 
   if (!err) next();
 
