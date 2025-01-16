@@ -1,4 +1,4 @@
-import { getPackageDependencies, NPMPackage } from "../service/package";
+import { getPackageDependencies, NPMPackage } from "./";
 import { presetPackageInfo } from "./fakePackageGetter";
 
 test("getPackageDependencies with valid package returns it", async () => {

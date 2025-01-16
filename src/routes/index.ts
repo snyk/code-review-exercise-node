@@ -1,9 +1,9 @@
-import express from "express";
-import { getPackage } from "../service/handler";
+import * as express from "express";
+import { getPackage } from "../service/handler/getPackage";
 import { handleErrors } from "./middlewares";
 import { healthCheckHandler } from "../service/handler/healthcheck";
 
-export function mountRoutes(): express.Express {
+export function createApp(): express.Express {
   const app = express();
 
   app.use(express.json());

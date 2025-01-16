@@ -1,11 +1,11 @@
-import { mountRoutes } from "./routes";
+import { createApp } from "./routes";
 import pino from "pino";
 
 const logger = pino();
 const PORT = 3000;
 
 function startApp() {
-  const app = mountRoutes();
+  const app = createApp();
   const server = app.listen(PORT, () => {
     logger.info(`Server is listening on http://localhost:${PORT}`);
     return;

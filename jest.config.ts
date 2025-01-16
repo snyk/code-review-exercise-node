@@ -21,6 +21,7 @@ const unit: Config = {
 
 const integration: Config = {
   ...common,
+  rootDir: "src/tests",
   displayName: "Integration",
   testRegex: integrationTestFilePattern,
 };
