@@ -46,7 +46,7 @@ test("getPackageDependencies with no package returns error", async () => {
   }
 });
 
-const generatePackage = (
+export const generatePackage = (
   name: string,
   version: string,
   dependencies: Record<string, string>,

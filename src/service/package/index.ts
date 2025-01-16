@@ -1,13 +1,15 @@
+import pino from "pino";
 import { NPMPackage } from "./types";
 export type { NPMPackage } from "./types";
 import { maxSatisfying } from "semver";
 
-type packageGetter = (name: string) => Promise<NPMPackage>;
+export type PackageGetter = (name: string) => Promise<NPMPackage>;
+const logger = pino();
 
 export async function getPackageDependencies(
   name: string,
   version: string,
-  getPackage: packageGetter,
+  getPackage: PackageGetter,
 ): Promise<Record<string, string>> {
   const npmPackage: NPMPackage = await getPackage(name);
 
@@ -22,6 +24,7 @@ export async function getPackageDependencies(
   for (const [name, range] of Object.entries(packageDependencyRanges)) {
     const subPackage: NPMPackage = await getPackage(name);
 
+    logger.warn({ subPackage, name, range }, "subpackage");
     dependencies[name] =
       maxSatisfying(Object.keys(subPackage.versions), range) ?? range;
   }

@@ -1,21 +1,15 @@
 import axios from "axios";
 import { Server } from "http";
-import { createApp } from "../routes/index";
 import { AddressInfo } from "net";
-
-export function setupServerForTest(): Server {
-  const app = createApp();
-  const server = app.listen();
-
-  return server;
-}
+import { setupServerForTest } from "./testHelpers";
+import { presetPackageInfo } from "../service/package/fakePackageGetter";
 
 describe("/healthcheck endpoint", () => {
   let server: Server;
   let port: number;
 
   beforeAll(async () => {
-    server = setupServerForTest();
+    server = setupServerForTest(presetPackageInfo({}));
     port = (server.address() as AddressInfo).port;
   });
 
@@ -26,6 +20,7 @@ describe("/healthcheck endpoint", () => {
   it("responds with 204", async () => {
     const address = `http://localhost:${port}/healthcheck`;
     const response = await axios.get(address);
+
     expect(response.status).toBe(204);
   });
 });

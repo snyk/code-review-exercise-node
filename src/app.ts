@@ -1,11 +1,12 @@
 import { createApp } from "./routes";
 import pino from "pino";
+import { getNPMPackageByName } from "./service/package/npmPackageGetter";
 
 const logger = pino();
 const PORT = 3000;
 
 function startApp() {
-  const app = createApp();
+  const app = createApp(getNPMPackageByName);
   const server = app.listen(PORT, () => {
     logger.info(`Server is listening on http://localhost:${PORT}`);
     return;
