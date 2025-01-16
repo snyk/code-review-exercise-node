@@ -13,10 +13,20 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Lint
+          command: npm run lint
+      - run:
+          name: Format
+          command: npm run format
+      - run:
+          name: Build with ts
+          command: npm run build
+      - run:
           name: Run tests
-          command: |
-            npm install && 
-            npm run test
+          command: npm run test
       - run:
           name: Build Docker image
           command: |
