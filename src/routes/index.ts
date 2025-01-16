@@ -9,10 +9,6 @@ export function mountRoutes(): express.Express {
 
   app.get("/package/:name/:version", getPackage);
 
-  app.get("/", (_, res) => {
-    res.send("Hello World!");
-  });
-
   app.use(handleErrors);
 
   return app;
