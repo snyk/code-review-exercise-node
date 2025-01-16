@@ -11,10 +11,6 @@ export const getPackage: RequestHandler = async function (
 ): Promise<void> {
   const { name, version } = req.params;
 
-  if (typeof name !== "string" || typeof version !== "string") {
-    return next(new Error("input failed validation"));
-  }
-
   try {
     const dependencies = await getPackageDependencies(
       name,
