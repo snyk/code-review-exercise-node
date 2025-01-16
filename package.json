@@ -13,7 +13,6 @@
     "test:unit": "jest --detectOpenHandles --runInBand --forceExit --selectProjects Unit",
     "test:integration": "jest --detectOpenHandles --runInBand --forceExit --selectProjects Integration"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
