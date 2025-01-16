@@ -1,23 +1,23 @@
 import axios from "axios";
-import { GenericContainer, StartedTestContainer } from "testcontainers";
+import { startApp } from "../app";
+import { Server } from "http";
+import { AddressInfo } from "net";
 
-let startedContainer: StartedTestContainer;
+let server: Server;
+let port: number;
 
-beforeAll(async () => {
-  const container = (
-    await GenericContainer.fromDockerfile(".").build()
-  ).withExposedPorts({ container: 3000, host: 8080 });
+beforeAll(() => {
+  server = startApp(3001);
+  port = (server.address() as AddressInfo).port;
+});
 
-  startedContainer = await container.start();
-}, 30_000);
-
-afterAll(async () => {
-  await startedContainer.stop();
+afterAll((done) => {
+  server.close(done);
 });
 
 it("fetches packages from NPM registry", async () => {
   const response = await axios.get(
-    "http://localhost:8080/package/react/16.3.0",
+    `http://localhost:${port}/package/react/16.3.0`,
   );
   expect(response.status).toBe(200);
   expect(response.data).toMatchObject({

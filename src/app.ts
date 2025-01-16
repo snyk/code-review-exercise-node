@@ -3,12 +3,11 @@ import pino from "pino";
 import { getNPMPackageByName } from "./service/package/npmPackageGetter";
 
 const logger = pino();
-const PORT = 3000;
 
-function startApp() {
+export function startApp(port = 3000) {
   const app = createApp(getNPMPackageByName);
-  const server = app.listen(PORT, () => {
-    logger.info(`Server is listening on http://localhost:${PORT}`);
+  const server = app.listen(port, () => {
+    logger.info(`Server is listening on http://localhost:${port}`);
     return;
   });
 
@@ -24,6 +23,5 @@ function startApp() {
       logger.info({}, "server gracefully shut down");
     });
   });
+  return server;
 }
-
-startApp();

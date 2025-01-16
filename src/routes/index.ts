@@ -1,4 +1,4 @@
-import * as express from "express";
+import express from "express";
 import { getPackageHandler } from "../service/handler/getPackage";
 import { handleErrors } from "./middlewares";
 import { healthCheckHandler } from "../service/handler/healthcheck";

@@ -32,6 +32,7 @@ const endToEnd: Config = {
   rootDir: "src/tests",
   displayName: "EndToEnd",
   testRegex: endToEndTestFilePattern,
+  openHandlesTimeout: 5000,
 };
 
 const config: Config = {
