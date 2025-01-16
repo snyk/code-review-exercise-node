@@ -1,11 +1,11 @@
 import { NPMPackage } from "./types";
-import got from "got";
+import axios from "axios";
 
 export async function getNPMPackageByName(name: string): Promise<NPMPackage> {
   try {
-    const npmPackage: NPMPackage = await got(
-      `https://registry.npmjs.org/${name}`,
-    ).json();
+    const npmPackage: NPMPackage = (
+      await axios.get(`https://registry.npmjs.org/${name}`)
+    ).data;
 
     return npmPackage;
   } catch (err) {

@@ -1,4 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
+import { AxiosError } from "axios";
+
+const UNEXPECTED_ERROR_MESSAGE = "Unexpected error";
+const INTERNAL_SERVER_ERROR_STATUS_CODE = 500;
+
 export function handleErrors(
   err: Error,
   _: Request,
@@ -9,10 +14,15 @@ export function handleErrors(
 
   if (!err) next();
 
-  // TODO: add error type check, and get status and message from error
-
-  const code: number = err.code ?? 500;
-  const message: string = err.message ?? "Unexpected error";
-
-  res.status(code).send({ error: { message } });
+  if (err instanceof AxiosError) {
+    const code = err.code
+      ? Number(err.code)
+      : INTERNAL_SERVER_ERROR_STATUS_CODE;
+    const message: string = err.message;
+    res.status(code).send({ error: { message } });
+  } else {
+    res
+      .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
+      .send({ error: { UNEXPECTED_ERROR_MESSAGE } });
+  }
 }
