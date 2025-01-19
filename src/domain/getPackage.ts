@@ -1,8 +1,5 @@
-import { NPMPackage } from "./types";
-export type { NPMPackage } from "./types";
+import { NPMPackage, PackageGetter } from "./types";
 import { maxSatisfying } from "semver";
-
-export type PackageGetter = (name: string) => Promise<NPMPackage>;
 
 export async function getPackageDependencies(
   name: string,

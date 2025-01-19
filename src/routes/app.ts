@@ -1,8 +1,8 @@
 import express from "express";
-import { getPackageHandler } from "../service/handler/getPackage";
+import { getPackageHandler } from "./getPackageHandler";
+import { healthCheckHandler } from "./healthcheckHandler";
 import { handleErrors } from "./middlewares";
-import { healthCheckHandler } from "../service/handler/healthcheck";
-import { PackageGetter } from "../service/package";
+import { PackageGetter } from "../domain/types";
 
 export function createApp(packageGetter: PackageGetter): express.Express {
   const app = express();

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { startApp } from "../src/app";
+import { startServer } from "../src/server";
 import { Server } from "http";
 import { AddressInfo } from "net";
 
@@ -7,7 +7,7 @@ let server: Server;
 let port: number;
 
 beforeAll(() => {
-  server = startApp(3001);
+  server = startServer(3001);
   port = (server.address() as AddressInfo).port;
 });
 

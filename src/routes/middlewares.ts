@@ -3,6 +3,7 @@ import { AxiosError } from "axios";
 import pino from "pino";
 
 const logger = pino();
+
 const UNEXPECTED_ERROR_MESSAGE = "Unexpected error";
 const INTERNAL_SERVER_ERROR_STATUS_CODE = 500;
 
@@ -25,6 +26,6 @@ export function handleErrors(
   } else {
     res
       .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-      .send({ error: { UNEXPECTED_ERROR_MESSAGE } });
+      .send({ error: { message: UNEXPECTED_ERROR_MESSAGE } });
   }
 }

@@ -1,5 +1,6 @@
-import { getPackageDependencies, NPMPackage } from "./";
+import { getPackageDependencies } from "./getPackage";
 import { presetPackageInfo } from "./fakePackageGetter";
+import { NPMPackage } from "./types";
 
 test("getPackageDependencies with valid package returns it", async () => {
   const name = "react";

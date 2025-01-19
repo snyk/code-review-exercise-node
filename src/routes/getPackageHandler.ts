@@ -1,5 +1,6 @@
 import { NextFunction, RequestHandler, Request, Response } from "express";
-import { getPackageDependencies, PackageGetter } from "../package";
+import { getPackageDependencies } from "../domain/getPackage";
+import { PackageGetter } from "../domain/types";
 
 /**
  * Attempts to retrieve package data from the npm registry and return it

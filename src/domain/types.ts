@@ -27,11 +27,13 @@ export interface NPMPackage {
   name: string;
   description: string;
   "dist-tags": Record<string, string>;
-  versions: Record<string, packageVersion>;
+  versions: Record<string, PackageVersion>;
 }
 
-export interface packageVersion {
+export interface PackageVersion {
   name: string;
   version: string;
   dependencies?: Record<string, string>;
 }
+
+export type PackageGetter = (name: string) => Promise<NPMPackage>;
