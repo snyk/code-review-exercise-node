@@ -20,4 +20,4 @@ COPY --from=builder --chown=node:node /home/node/app/node_modules/ ./node_module
 
 EXPOSE 3000
 USER node
-CMD [ "node", "dist/index.js" ]
+CMD [ "node", "dist/src/index.js" ]

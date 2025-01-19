@@ -1,5 +1,5 @@
 import axios from "axios";
-import { startApp } from "../app";
+import { startApp } from "../src/app";
 import { Server } from "http";
 import { AddressInfo } from "net";
 

@@ -2,8 +2,8 @@ import { Server } from "http";
 import { setupServerForTest } from "./testHelpers";
 import { AddressInfo } from "net";
 import axios from "axios";
-import { presetPackageInfo } from "../service/package/fakePackageGetter";
-import { generatePackage } from "../service/package/getPackage.test";
+import { presetPackageInfo } from "../src/service/package/fakePackageGetter";
+import { generatePackage } from "../src/service/package/getPackage.test";
 
 describe("/package/:name/:version endpoint", () => {
   let server: Server;

@@ -1,6 +1,6 @@
 import { Server } from "http";
-import { createApp } from "../routes";
-import { PackageGetter } from "../service/package";
+import { createApp } from "../src/routes";
+import { PackageGetter } from "../src/service/package";
 
 export function setupServerForTest(packageGetter: PackageGetter): Server {
   const app = createApp(packageGetter);

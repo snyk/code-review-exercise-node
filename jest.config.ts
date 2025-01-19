@@ -22,14 +22,14 @@ const unit: Config = {
 
 const integration: Config = {
   ...common,
-  rootDir: "src/tests",
+  rootDir: "tests",
   displayName: "Integration",
   testRegex: integrationTestFilePattern,
 };
 
 const endToEnd: Config = {
   ...common,
-  rootDir: "src/tests",
+  rootDir: "tests",
   displayName: "EndToEnd",
   testRegex: endToEndTestFilePattern,
   openHandlesTimeout: 5000,
