@@ -1,7 +1,7 @@
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import { getNPMPackageByName, REGISTRY_URL } from "./npmPackageGetter";
-import mockResponse from "./reactStub.json";
+import mockResponse from "./npmResponseStub.json";
 import { PackageNotFoundError } from "./errors";
 
 let mock: AxiosMockAdapter;

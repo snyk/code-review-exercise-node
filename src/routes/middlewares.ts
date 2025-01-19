@@ -1,31 +1,36 @@
 import type { Request, Response, NextFunction } from "express";
-import { AxiosError } from "axios";
 import pino from "pino";
+import { PackageNotFoundError } from "../domain/errors";
 
 const logger = pino();
 
-const UNEXPECTED_ERROR_MESSAGE = "Unexpected error";
-const INTERNAL_SERVER_ERROR_STATUS_CODE = 500;
-
 export function handleErrors(
-  err: Error,
+  error: Error,
+  _: Request,
+  res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  __: NextFunction,
+): void {
+  if (error instanceof PackageNotFoundError) {
+    res.status(404);
+    res.send({
+      error: { message: "Package not found", packageName: error.packageName },
+    });
+    return;
+  } else {
+    logger.error({ error }, "Internal server error");
+
+    res.status(500);
+    res.send({ error: { message: "Internal server error" } });
+  }
+}
+
+export function notFoundHandler(
   _: Request,
   res: Response,
   next: NextFunction,
-) {
-  logger.error(err);
-
-  if (!err) next();
-
-  if (err instanceof AxiosError) {
-    const code = err.code
-      ? Number(err.code)
-      : INTERNAL_SERVER_ERROR_STATUS_CODE;
-    const message: string = err.message;
-    res.status(code).send({ error: { message } });
-  } else {
-    res
-      .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-      .send({ error: { message: UNEXPECTED_ERROR_MESSAGE } });
-  }
+): void {
+  res.status(404);
+  res.send({ error: { message: "Not found" } });
+  next();
 }
