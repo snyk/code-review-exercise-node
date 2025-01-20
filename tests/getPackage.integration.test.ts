@@ -3,7 +3,7 @@ import { setupServerForTest } from "./testHelpers";
 import { AddressInfo } from "net";
 import axios from "axios";
 import { presetPackageInfo } from "../src/domain/fakePackageGetter";
-import { generatePackage } from "../src/domain/getPackage.test";
+import { generatePackage } from "../src/domain/testHelpers";
 
 describe("/package/:name/:version endpoint", () => {
   let server: Server;
