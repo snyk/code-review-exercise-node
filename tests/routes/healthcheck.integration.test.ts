@@ -1,8 +1,8 @@
 import axios from "axios";
 import { Server } from "http";
 import { AddressInfo } from "net";
-import { setupServerForTest } from "./testHelpers";
-import { presetPackageInfo } from "../src/domain/fakePackageGetter";
+import { setupServerForTest } from "../testHelpers";
+import { presetPackageInfo } from "../domain/fakePackageGetter";
 
 describe("/healthcheck endpoint", () => {
   let server: Server;

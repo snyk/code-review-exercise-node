@@ -1,9 +1,9 @@
 import {
   PackageNotFoundError,
   PackageVersionNotFoundError,
-} from "../domain/errors";
+} from "../../src/domain/errors";
 import { NextFunction, Request, Response } from "express";
-import { handleErrors, notFoundHandler } from "./middlewares";
+import { handleErrors, notFoundHandler } from "../../src/routes/middlewares";
 
 let mockRequest: Request;
 let mockResponse: Response;

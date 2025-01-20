@@ -1,8 +1,11 @@
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-import { getNPMPackageByName, REGISTRY_URL } from "./npmPackageGetter";
+import {
+  getNPMPackageByName,
+  REGISTRY_URL,
+} from "./../../src/domain/npmPackageGetter";
 import mockResponse from "./npmResponseStub.json";
-import { PackageNotFoundError } from "./errors";
+import { PackageNotFoundError } from "./../../src/domain/errors";
 
 let mock: AxiosMockAdapter;
 const packageName = "react";

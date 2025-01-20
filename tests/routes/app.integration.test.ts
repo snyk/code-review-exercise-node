@@ -1,8 +1,8 @@
 import { Server } from "http";
 import { AddressInfo } from "net";
 import axios from "axios";
-import { setupServerForTest } from "./testHelpers";
-import { PackageNotFoundError } from "../src/domain/errors";
+import { setupServerForTest } from "./../testHelpers";
+import { PackageNotFoundError } from "../../src/domain/errors";
 
 describe("app", () => {
   let server: Server;

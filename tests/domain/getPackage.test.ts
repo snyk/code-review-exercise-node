@@ -1,8 +1,8 @@
-import { getPackageDependencies } from "./getPackage";
+import { getPackageDependencies } from "../../src/domain/getPackage";
 import { presetPackageInfo } from "./fakePackageGetter";
-import { NPMPackage } from "./types";
-import { generatePackage } from "./testHelpers";
-import { PackageVersionNotFoundError } from "./errors";
+import { NPMPackage } from "../../src/domain/types";
+import { generatePackage } from "tests/testHelpers";
+import { PackageVersionNotFoundError } from "../../src/domain/errors";
 
 describe("getPackageDependencies", () => {
   it("returns dependencies for valid package + version", async () => {
