@@ -8,7 +8,6 @@ export async function getPackageDependencies(
   getPackage: PackageGetter,
 ): Promise<Record<string, string>> {
   const npmPackage: NPMPackage = await getPackage(name);
-
   if (!npmPackage.versions[version]) {
     throw new PackageVersionNotFoundError(name, version);
   }

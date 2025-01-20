@@ -1,57 +1,112 @@
 import { getPackageDependencies } from "../../src/domain/getPackage";
-import { presetPackageInfo } from "./fakePackageGetter";
-import { NPMPackage } from "../../src/domain/types";
-import { generatePackage } from "tests/testHelpers";
+import { InMemoryPackageGetter } from "../testHelpers";
 import { PackageVersionNotFoundError } from "../../src/domain/errors";
+
+const packageName = "react";
+const packageVersion = "16.3.0";
 
 describe("getPackageDependencies", () => {
   it("returns dependencies for valid package + version", async () => {
-    const packageName = "react";
-    const version = "16.3.0";
+    const packageGetter = new InMemoryPackageGetter();
 
-    const innerName = "loose-envify";
-    const innerVersion = "1.1.0";
-
-    const originalDependencies = {
-      [innerName]: innerVersion,
+    const dependencies = {
+      "loose-envify": "1.1.0",
     };
 
-    const requestedPackage: NPMPackage = generatePackage(
+    packageGetter.setDependenciesForPackageAndVersion(
       packageName,
-      version,
-      originalDependencies,
+      packageVersion,
+      dependencies,
     );
-    const innerPackage = generatePackage(innerName, innerVersion, {});
+    packageGetter.setDependenciesForPackageAndVersion("loose-envify", "1.1.0");
 
-    const packageGetter = presetPackageInfo({
-      [packageName]: requestedPackage,
-      [innerName]: innerPackage,
-    });
-
-    const dependencies = await getPackageDependencies(
+    const resolvedDependencies = await getPackageDependencies(
       packageName,
-      version,
-      packageGetter,
+      packageVersion,
+      packageGetter.getPackageGetter(),
     );
 
-    expect(dependencies).toStrictEqual({ [innerName]: innerVersion });
+    expect(resolvedDependencies).toStrictEqual({ ["loose-envify"]: "1.1.0" });
+  });
+
+  it("returns maxSatisfying version for a dependency range", async () => {
+    const packageGetter = new InMemoryPackageGetter();
+
+    const dependencies = {
+      "loose-envify": "^1.1.0",
+    };
+
+    packageGetter.setDependenciesForPackageAndVersion(
+      packageName,
+      packageVersion,
+      dependencies,
+    );
+    packageGetter.setDependenciesForPackageAndVersion("loose-envify", "1.1.0");
+    packageGetter.setDependenciesForPackageAndVersion("loose-envify", "1.2.0");
+    packageGetter.setDependenciesForPackageAndVersion("loose-envify", "1.3.0");
+    packageGetter.setDependenciesForPackageAndVersion("loose-envify", "1.3.5");
+
+    const resolvedDependencies = await getPackageDependencies(
+      packageName,
+      packageVersion,
+      packageGetter.getPackageGetter(),
+    );
+
+    expect(resolvedDependencies).toStrictEqual({ ["loose-envify"]: "1.3.5" });
+  });
+
+  it("falls back to version range when dependency does not have matching version", async () => {
+    const packageGetter = new InMemoryPackageGetter();
+
+    const dependencies = {
+      "loose-envify": "^1.1.0",
+    };
+
+    packageGetter.setDependenciesForPackageAndVersion(
+      packageName,
+      packageVersion,
+      dependencies,
+    );
+
+    const resolvedDependencies = await getPackageDependencies(
+      packageName,
+      packageVersion,
+      packageGetter.getPackageGetter(),
+    );
+
+    expect(resolvedDependencies).toStrictEqual({ ["loose-envify"]: "^1.1.0" });
+  });
+
+  it("handles package without dependencies", async () => {
+    const packageGetter = new InMemoryPackageGetter();
+
+    packageGetter.setDependenciesForPackageAndVersion(
+      packageName,
+      packageVersion,
+    );
+
+    const resolvedDependencies = await getPackageDependencies(
+      packageName,
+      packageVersion,
+      packageGetter.getPackageGetter(),
+    );
+    expect(resolvedDependencies).toStrictEqual({});
   });
 
   it("throws PackageVersionNotFound error for non existing version", () => {
-    const packageName = "react";
-    const version = "non-existing-version";
+    const packageGetter = new InMemoryPackageGetter();
 
-    const packageWithVersion: NPMPackage = generatePackage(
+    packageGetter.setDependenciesForPackageAndVersion(
       packageName,
-      "existing-version",
-      {},
+      packageVersion,
     );
-    const packageGetter = presetPackageInfo({
-      [packageName]: packageWithVersion,
-    });
 
     expect(
-      getPackageDependencies(packageName, version, packageGetter),
+      getPackageDependencies(
+        packageName,
+        "non-existing-version",
+        packageGetter.getPackageGetter(),
+      ),
     ).rejects.toThrow(PackageVersionNotFoundError);
   });
 });

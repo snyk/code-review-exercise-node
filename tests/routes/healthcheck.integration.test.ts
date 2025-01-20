@@ -1,15 +1,14 @@
 import axios from "axios";
 import { Server } from "http";
 import { AddressInfo } from "net";
-import { setupServerForTest } from "../testHelpers";
-import { presetPackageInfo } from "../domain/fakePackageGetter";
+import { InMemoryPackageGetter, setupServerForTest } from "../testHelpers";
 
 describe("/healthcheck endpoint", () => {
   let server: Server;
   let port: number;
 
   beforeAll(async () => {
-    server = setupServerForTest(presetPackageInfo({}));
+    server = setupServerForTest(new InMemoryPackageGetter().getPackageGetter());
     port = (server.address() as AddressInfo).port;
   });
 

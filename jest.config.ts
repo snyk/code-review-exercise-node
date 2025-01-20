@@ -6,7 +6,7 @@ const endToEndTestFilePattern = ".*\\.e2e.test\\.ts$";
 
 const common: Config = {
   moduleFileExtensions: ["js", "json", "ts"],
-  rootDir: "src",
+  rootDir: ".",
   transform: {
     "^.+\\.(t|j)s$": "ts-jest",
   },
@@ -22,14 +22,12 @@ const unit: Config = {
 
 const integration: Config = {
   ...common,
-  rootDir: "tests",
   displayName: "Integration",
   testRegex: integrationTestFilePattern,
 };
 
 const endToEnd: Config = {
   ...common,
-  rootDir: "tests",
   displayName: "EndToEnd",
   testRegex: endToEndTestFilePattern,
   openHandlesTimeout: 5000,

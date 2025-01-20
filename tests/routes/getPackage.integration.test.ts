@@ -2,37 +2,30 @@ import { Server } from "http";
 import { setupServerForTest } from "../testHelpers";
 import { AddressInfo } from "net";
 import axios from "axios";
-import { presetPackageInfo } from "../domain/fakePackageGetter";
-import { generatePackage } from "../testHelpers";
+import { InMemoryPackageGetter } from "../testHelpers";
+
+const packageName = "react";
+const packageVersion = "16.3.0";
 
 describe("/package/:name/:version endpoint", () => {
   let server: Server;
   let port: number;
 
   beforeAll(async () => {
-    const name = "react";
-    const version = "16.3.0";
+    const packageGetter = new InMemoryPackageGetter();
 
-    const innerName = "loose-envify";
-    const innerVersion = "1.1.0";
-
-    const originalDependencies = {
-      [innerName]: innerVersion,
+    const dependencies = {
+      "loose-envify": "1.1.0",
     };
 
-    const requestedPackage = generatePackage(
-      name,
-      version,
-      originalDependencies,
+    packageGetter.setDependenciesForPackageAndVersion(
+      packageName,
+      packageVersion,
+      dependencies,
     );
-    const innerPackage = generatePackage(innerName, innerVersion, {});
+    packageGetter.setDependenciesForPackageAndVersion("loose-envify", "1.1.0");
 
-    const packageGetter = presetPackageInfo({
-      [name]: requestedPackage,
-      [innerName]: innerPackage,
-    });
-
-    server = setupServerForTest(packageGetter);
+    server = setupServerForTest(packageGetter.getPackageGetter());
     port = (server.address() as AddressInfo).port;
   });
 
