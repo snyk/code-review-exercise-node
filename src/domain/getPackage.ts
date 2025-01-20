@@ -1,3 +1,4 @@
+import { PackageVersionNotFoundError } from "./errors";
 import { NPMPackage, PackageGetter } from "./types";
 import { maxSatisfying } from "semver";
 
@@ -9,7 +10,7 @@ export async function getPackageDependencies(
   const npmPackage: NPMPackage = await getPackage(name);
 
   if (!npmPackage.versions[version]) {
-    throw new Error("requested version does not exist in package");
+    throw new PackageVersionNotFoundError(name, version);
   }
 
   const packageDependencyRanges =

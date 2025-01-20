@@ -1,6 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
 import pino from "pino";
-import { PackageNotFoundError } from "../domain/errors";
+import {
+  PackageNotFoundError,
+  PackageVersionNotFoundError,
+} from "../domain/errors";
 
 const logger = pino();
 
@@ -17,6 +20,16 @@ export function handleErrors(
       error: { message: "Package not found", packageName: error.packageName },
     });
     return;
+  }
+  if (error instanceof PackageVersionNotFoundError) {
+    res.status(404);
+    res.send({
+      error: {
+        message: "Requested version for package not found",
+        packageName: error.packageName,
+        packageVersion: error.packageVersion,
+      },
+    });
   } else {
     logger.error({ error }, "Internal server error");
 

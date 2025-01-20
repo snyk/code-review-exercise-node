@@ -3,3 +3,12 @@ export class PackageNotFoundError extends Error {
     super();
   }
 }
+
+export class PackageVersionNotFoundError extends Error {
+  constructor(
+    public packageName: string,
+    public packageVersion: string,
+  ) {
+    super();
+  }
+}
