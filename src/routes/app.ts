@@ -1,7 +1,7 @@
 import express from "express";
 import { getPackageHandler } from "./getPackageHandler";
 import { healthCheckHandler } from "./healthcheckHandler";
-import { handleErrors } from "./middlewares";
+import { handleErrors, notFoundHandler } from "./middlewares";
 import { PackageGetter } from "../domain/types";
 
 export function createApp(packageGetter: PackageGetter): express.Express {
@@ -12,6 +12,7 @@ export function createApp(packageGetter: PackageGetter): express.Express {
   app.get("/healthcheck", healthCheckHandler);
   app.get("/package/:name/:version", getPackageHandler(packageGetter));
 
+  app.use("*", notFoundHandler);
   app.use(handleErrors);
 
   return app;

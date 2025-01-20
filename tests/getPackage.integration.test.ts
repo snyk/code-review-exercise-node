@@ -44,7 +44,7 @@ describe("/package/:name/:version endpoint", () => {
     const packageName = "react";
     const version = "16.3.0";
     const address = `http://localhost:${port}/package/${packageName}/${version}`;
-    const response = await axios.get(address, {});
+    const response = await axios.get(address);
     expect(response.status).toBe(200);
     const expectedResponse = {
       name: "react",
