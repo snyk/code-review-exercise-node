@@ -8,8 +8,8 @@ describe("app", () => {
   let server: Server;
   let port: number;
   let error: Error;
-  const name = "react";
-  const version = "16.3.0";
+  const packageName = "react";
+  const packageVersion = "16.3.0";
 
   beforeAll(() => {
     server = setupServerForTest(() => {
@@ -33,19 +33,19 @@ describe("app", () => {
   it("returns 404 for unknown packages", async () => {
     error = new PackageNotFoundError("react");
 
-    const address = `http://localhost:${port}/package/${name}/${version}`;
+    const address = `http://localhost:${port}/package/${packageName}/${packageVersion}`;
     const response = await axios.get(address, { validateStatus: () => true });
 
     expect(response.status).toBe(404);
     expect(response.data).toEqual({
-      error: { message: "Package not found", packageName: name },
+      error: { message: "Package not found", packageName: packageName },
     });
   });
 
   it("returns 500 for unknown errors", async () => {
     error = new Error("some unknown error");
 
-    const address = `http://localhost:${port}/package/${name}/${version}`;
+    const address = `http://localhost:${port}/package/${packageName}/${packageVersion}`;
     const response = await axios.get(address, { validateStatus: () => true });
 
     expect(response.status).toBe(500);

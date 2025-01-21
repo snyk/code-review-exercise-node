@@ -1,6 +1,6 @@
 import express from "express";
 import { getPackageHandler } from "./getPackageHandler";
-import { healthCheckHandler } from "./healthcheckHandler";
+import { healthcheckHandler } from "./healthcheckHandler";
 import { handleErrors, notFoundHandler } from "./middlewares";
 import { PackageGetter } from "../domain/types";
 
@@ -9,8 +9,11 @@ export function createApp(packageGetter: PackageGetter): express.Express {
 
   app.use(express.json());
 
-  app.get("/healthcheck", healthCheckHandler);
-  app.get("/package/:name/:version", getPackageHandler(packageGetter));
+  app.get("/healthcheck", healthcheckHandler);
+  app.get(
+    "/package/:packageName/:packageVersion",
+    getPackageHandler(packageGetter),
+  );
 
   app.use("*", notFoundHandler);
   app.use(handleErrors);

@@ -1,6 +1,11 @@
 import { Server } from "http";
 import { createApp } from "../src/routes/app";
-import { PackageGetter } from "../src/domain/types";
+import {
+  PackageGetter,
+  PackageName,
+  PackageRange,
+  PackageVersion,
+} from "../src/domain/types";
 
 export function setupServerForTest(packageGetter: PackageGetter): Server {
   const app = createApp(packageGetter);
@@ -9,16 +14,16 @@ export function setupServerForTest(packageGetter: PackageGetter): Server {
   return server;
 }
 
-export class InMemoryPackageGetter {
+export class InMemoryPackageGetterFactory {
   private packageStore: Record<
-    string,
-    Record<string, Record<string, string> | undefined>
+    PackageName,
+    Record<PackageVersion, Record<PackageName, PackageRange> | undefined>
   > = {};
 
   setDependenciesForPackageAndVersion(
     packageName: string,
     packageVersion: string,
-    dependencies?: Record<string, string>,
+    dependencies?: Record<PackageName, PackageVersion>,
   ) {
     this.packageStore[packageName] = {
       ...this.packageStore[packageName],
@@ -27,7 +32,7 @@ export class InMemoryPackageGetter {
   }
 
   getPackageGetter(): PackageGetter {
-    return async (packageName: string) => {
+    return async (packageName: PackageName) => {
       const versions = this.packageStore[packageName];
       return {
         name: packageName,

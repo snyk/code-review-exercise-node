@@ -1,3 +1,7 @@
+export type PackageName = string;
+export type PackageVersion = string;
+export type PackageRange = string;
+
 /**
  * The result of a package request against `https://registry.npmjs.org`. This is
  * a subset of the returned data, not a full representation, that contains
@@ -20,14 +24,14 @@
  * }
  */
 export interface NPMPackage {
-  name: string;
-  versions: Record<string, PackageVersion>;
+  name: PackageName;
+  versions: Record<PackageVersion, PackageWithDependencies>;
 }
 
-export interface PackageVersion {
-  name: string;
-  version: string;
-  dependencies?: Record<string, string>;
+export interface PackageWithDependencies {
+  name: PackageName;
+  version: PackageVersion;
+  dependencies?: Record<PackageName, PackageRange>;
 }
 
-export type PackageGetter = (name: string) => Promise<NPMPackage>;
+export type PackageGetter = (packageName: PackageName) => Promise<NPMPackage>;

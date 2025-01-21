@@ -2,17 +2,17 @@ import { Server } from "http";
 import { setupServerForTest } from "../testHelpers";
 import { AddressInfo } from "net";
 import axios from "axios";
-import { InMemoryPackageGetter } from "../testHelpers";
+import { InMemoryPackageGetterFactory } from "../testHelpers";
 
-const packageName = "react";
-const packageVersion = "16.3.0";
-
-describe("/package/:name/:version endpoint", () => {
+describe("/package/:packageName/:packageVersion endpoint", () => {
   let server: Server;
   let port: number;
 
   beforeAll(async () => {
-    const packageGetter = new InMemoryPackageGetter();
+    const packageName = "react";
+    const packageVersion = "16.3.0";
+
+    const packageGetter = new InMemoryPackageGetterFactory();
 
     const dependencies = {
       "loose-envify": "1.1.0",

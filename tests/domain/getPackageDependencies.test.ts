@@ -1,5 +1,5 @@
-import { getPackageDependencies } from "../../src/domain/getPackage";
-import { InMemoryPackageGetter } from "../testHelpers";
+import { getPackageDependencies } from "../../src/domain/getPackageDependencies";
+import { InMemoryPackageGetterFactory } from "../testHelpers";
 import { PackageVersionNotFoundError } from "../../src/domain/errors";
 
 const packageName = "react";
@@ -7,7 +7,7 @@ const packageVersion = "16.3.0";
 
 describe("getPackageDependencies", () => {
   it("returns dependencies for valid package + version", async () => {
-    const packageGetter = new InMemoryPackageGetter();
+    const packageGetter = new InMemoryPackageGetterFactory();
 
     const dependencies = {
       "loose-envify": "1.1.0",
@@ -30,7 +30,7 @@ describe("getPackageDependencies", () => {
   });
 
   it("returns maxSatisfying version for a dependency range", async () => {
-    const packageGetter = new InMemoryPackageGetter();
+    const packageGetter = new InMemoryPackageGetterFactory();
 
     const dependencies = {
       "loose-envify": "^1.1.0",
@@ -55,8 +55,8 @@ describe("getPackageDependencies", () => {
     expect(resolvedDependencies).toStrictEqual({ ["loose-envify"]: "1.3.5" });
   });
 
-  it("falls back to version range when dependency does not have matching version", async () => {
-    const packageGetter = new InMemoryPackageGetter();
+  it("falls back to version range when matching version does not exist for dependency", async () => {
+    const packageGetter = new InMemoryPackageGetterFactory();
 
     const dependencies = {
       "loose-envify": "^1.1.0",
@@ -78,7 +78,7 @@ describe("getPackageDependencies", () => {
   });
 
   it("handles package without dependencies", async () => {
-    const packageGetter = new InMemoryPackageGetter();
+    const packageGetter = new InMemoryPackageGetterFactory();
 
     packageGetter.setDependenciesForPackageAndVersion(
       packageName,
@@ -94,7 +94,7 @@ describe("getPackageDependencies", () => {
   });
 
   it("throws PackageVersionNotFound error for non existing version", () => {
-    const packageGetter = new InMemoryPackageGetter();
+    const packageGetter = new InMemoryPackageGetterFactory();
 
     packageGetter.setDependenciesForPackageAndVersion(
       packageName,

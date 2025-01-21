@@ -46,7 +46,7 @@ describe("getNPMPackageByName", () => {
     );
   });
 
-  it("throws error on 500 from npmregistry", async () => {
+  it("throws error on 500 from npm registry", async () => {
     mock.onGet(`${REGISTRY_URL}/${packageName}`).reply(500);
 
     expect(getNPMPackageByName(packageName)).rejects.toThrow();
