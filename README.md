@@ -1,4 +1,4 @@
-# README
+# Readme
 
 A web server that provides a HTTP API to query the dependency tree of an [npm](https://www.npmjs.com/) package.
 
@@ -71,5 +71,5 @@ npm run format
 You can build a docker image and run a containerized version of the application:
 
 ```bash
-
+docker build -t dependency_server . && docker run -p 3000:3000 dependency_server
 ```
