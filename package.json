@@ -38,7 +38,6 @@
   "dependencies": {
     "axios": "^1.7.9",
     "express": "^4.21.2",
-    "got": "^14.4.5",
     "pino": "^9.6.0",
     "semver": "^7.6.3"
   }
