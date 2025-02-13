@@ -1,7 +1,7 @@
 name: "Install node and dependencies"
 description: "Installs node and dependencies with npm ci"
 inputs:
-  NODE_VERSION_FILE:
+  node-version-file:
     description: "Location of the .nvmrc file"
     required: true
 runs:
@@ -12,7 +12,7 @@ runs:
     - name: Install Node
       uses: actions/setup-node@v4
       with:
-        node-version-file: ${{ inputs.NODE_VERSION_FILE }}
+        node-version-file: ${{ inputs.node-version-file }}
     - name: Install
       shell: bash
       run: npm ci
