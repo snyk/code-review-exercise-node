@@ -1,0 +1,67 @@
+---
+name: CICD
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+env:
+  NODE_VERSION_FILE: ".nvmrc"
+jobs:
+  build-lint-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install Node and dependencies
+        uses: ./.github/actions/npminstall
+        with:
+          node-version-file: ${{ env.NODE_VERSION_FILE }}
+      - name: Build with ts
+        run: npm run build
+      - name: Lint
+        run: npm run lint
+      - name: Format
+        run: npm run format
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build image
+        run: docker build -t code-review-exercise-node:${{ github.sha }} .
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+  snyk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@0.4.0
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install Node and dependencies
+        uses: ./.github/actions/npminstall
+        with:
+          node-version-file: ${{ env.NODE_VERSION_FILE }}
+      - name: Test
+        run: npm run test
