@@ -3,9 +3,8 @@ import { createApp } from "../routes/app";
 import { getNPMPackageByName } from "../domain/npmPackageGetter";
 
 const logger = pino();
-const DEFAULT_PORT = 3000;
 
-export function startServer(port = DEFAULT_PORT) {
+export function startServer(port: number) {
   const app = createApp(getNPMPackageByName);
 
   const server = app.listen(port, () => {

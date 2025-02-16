@@ -15,7 +15,12 @@ npm install
 npm start
 ```
 
-The server will start on port 3000 and will restart on changes to the files in `./src/`.
+The server will by default start on port 3000 and will restart on changes to the files in `./src/`.
+The server can be started on a custom port
+
+```bash
+npm start -- --port 3001
+```
 
 The server contains two endpoints - `/healthcheck` and `/package/:packageName/:packageVersion`.
 You can fetch the dependencies for `react@16.3.0` via:
