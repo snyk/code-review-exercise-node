@@ -2,7 +2,7 @@ import type { Config } from "jest";
 
 const testFilePattern = ".*\\.test\\.ts$";
 const integrationTestFilePattern = ".*\\.integration.test\\.ts$";
-const endToEndTestFilePattern = ".*\\.e2e.test\\.ts$";
+const endToEndTestFilePattern = "e2e.test\\.ts$";
 
 const common: Config = {
   moduleFileExtensions: ["js", "json", "ts"],

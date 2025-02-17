@@ -37,6 +37,7 @@ You can run the test suite with this command:
 npm run test
 ```
 
+By default this only runs unit and integration tests, but does not run the end-to-end tests.
 The project contains unit, integration and end-to-end tests, located in `/tests`. You can execute them separately:
 
 ```bash

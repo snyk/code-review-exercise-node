@@ -63,5 +63,7 @@ jobs:
         uses: ./.github/actions/npminstall
         with:
           node-version-file: ${{ env.NODE_VERSION_FILE }}
-      - name: Test
+      - name: Tests
         run: npm run test
+      - name: E2E Tests
+        run: npm run test:e2e
