@@ -4,6 +4,10 @@ import { getNPMPackageByName } from "../domain/npmPackageGetter";
 
 const logger = pino();
 
+/**
+ * Function to the webserver with the application.
+ * @param  {[number]} port The port on which the webserver will be started.
+ */
 export function startServer(port: number) {
   const app = createApp(getNPMPackageByName);
 

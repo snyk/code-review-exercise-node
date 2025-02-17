@@ -7,6 +7,10 @@ import {
 
 const logger = pino();
 
+/**
+ * Express middleware which maps domain errors to status
+ * codes with a meaningful error message.
+ */
 export function handleErrors(
   error: Error,
   _: Request,
@@ -38,6 +42,10 @@ export function handleErrors(
   }
 }
 
+/**
+ * Express middleware which ensure that a non-existing route is
+ * returning a 404 status code and a json response with an error.
+ */
 export function notFoundHandler(
   _: Request,
   res: Response,
