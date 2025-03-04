@@ -9,7 +9,7 @@
     "lint:fix": "eslint --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "jest --detectOpenHandles --runInBand --selectProjects Unit Integration EndToEnd",
+    "test": "jest --detectOpenHandles --runInBand --selectProjects Unit Integration",
     "test:unit": "jest --detectOpenHandles --runInBand --selectProjects Unit",
     "test:integration": "jest --detectOpenHandles --runInBand --selectProjects Integration",
     "test:e2e": "jest --detectOpenHandles --runInBand --selectProjects EndToEnd"
