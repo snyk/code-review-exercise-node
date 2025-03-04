@@ -1,6 +1,6 @@
 # Readme
 
-A web server that provides a HTTP API to query the dependency tree of an [npm](https://www.npmjs.com/) package with a given version.
+A web server that provides a HTTP API to query the dependency list for an [npm](https://www.npmjs.com/) package with a given version.
 
 ## Prerequisites
 
@@ -23,7 +23,7 @@ npm start -- --port 3001
 ```
 
 The server contains two endpoints - `/healthcheck` and `/package/:packageName/:packageVersion`.
-You can fetch the dependencies for `react@16.3.0` via:
+You can fetch the dependencies for `react@16.13.0` via:
 
 ```bash
 curl http://localhost:3000/package/react/16.13.0 | jq .
