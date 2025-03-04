@@ -1,6 +1,6 @@
 # Readme
 
-A web server that provides a HTTP API to query the dependency tree of an [npm](https://www.npmjs.com/) package with a given version.
+A web server that provides a HTTP API to query the dependency list for an [npm](https://www.npmjs.com/) package with a given version.
 
 ## Prerequisites
 
