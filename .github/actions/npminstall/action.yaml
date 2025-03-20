@@ -1,0 +1,18 @@
+name: "Install node and dependencies"
+description: "Installs node and dependencies with npm ci"
+inputs:
+  node-version-file:
+    description: "Location of the .nvmrc file"
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Install Node
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: ${{ inputs.node-version-file }}
+    - name: Install
+      shell: bash
+      run: npm ci
