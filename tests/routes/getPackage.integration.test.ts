@@ -33,7 +33,7 @@ describe("/package/:packageName/:packageVersion endpoint", () => {
     server.close();
   });
 
-  it("responds with list of dependencies", async () => {
+  it("responds with a tree of dependencies", async () => {
     const packageName = "react";
     const version = "16.3.0";
     const address = `http://localhost:${port}/package/${packageName}/${version}`;
@@ -42,7 +42,12 @@ describe("/package/:packageName/:packageVersion endpoint", () => {
     const expectedResponse = {
       name: "react",
       version: "16.3.0",
-      dependencies: { "loose-envify": "1.1.0" },
+      dependencies: {
+        "loose-envify": {
+          version: "1.1.0",
+          dependencies: { "js-tokens": { version: "1.0.3", dependencies: {} } },
+        },
+      },
     };
 
     expect(response.data).toEqual(expectedResponse);
