@@ -6,7 +6,7 @@ import {
 } from "../domain/errors";
 
 const logger = pino();
-
+//we dont use the nextFunction so why its here and also the eslint rule disabling
 /**
  * Express middleware which maps domain errors to status
  * codes with a meaningful error message.
