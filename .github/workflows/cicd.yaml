@@ -5,6 +5,10 @@ on:
     branches: [main]
   push:
     branches: [main]
+  schedule:
+    # Re-run every 2 weeks on Sunday at midnight UTC to keep CI results fresh
+    - cron: "0 0 */14 * *"
+  workflow_dispatch:  # Allow manual re-runs from GitHub UI
 env:
   NODE_VERSION_FILE: ".nvmrc"
 jobs:
